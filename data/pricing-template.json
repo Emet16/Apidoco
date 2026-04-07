@@ -1,0 +1,53 @@
+{
+  "boilers": [
+    {
+      "name": "De Dietrich MCR4 EVO 24T",
+      "type": "jednofunkcyjny",
+      "price": 8400,
+      "image": "https://via.placeholder.com/420x220?text=MCR4+24T",
+      "description": "Kocioł jednofunkcyjny",
+      "maxCircuits": 2
+    },
+    {
+      "name": "De Dietrich MCR4 EVO 24/28 MI",
+      "type": "dwufunkcyjny",
+      "price": 9100,
+      "image": "https://via.placeholder.com/420x220?text=MCR4+24/28+MI",
+      "description": "Kocioł dwufunkcyjny",
+      "maxCircuits": 3
+    }
+  ],
+  "tanks": [
+    {
+      "name": "Zasobnik 120L",
+      "price": 2000,
+      "image": "https://via.placeholder.com/420x220?text=Zasobnik+120L",
+      "description": "Zasobnik ciepłej wody"
+    }
+  ],
+  "stages": [
+    {
+      "name": "Montaż rozdzielacza",
+      "price": 500,
+      "description": "Rozdzielacz do podłogówki",
+      "type": "floor",
+      "question": "Czy potrzebujesz rozdzielacza?"
+    },
+    {
+      "name": "Modernizacja pionów",
+      "price": 700,
+      "description": "Przeróbki dla grzejników",
+      "type": "radiator",
+      "question": "Czy modernizować piony?"
+    }
+  ],
+  "automation": [
+    {
+      "name": "Sterownik pokojowy",
+      "price": 300,
+      "description": "Regulacja temperatury"
+    }
+  ],
+  "chimney": { "pricePerMeter": 100, "minLength": 1 },
+  "circuits": { "extra2": 700, "extra3": 700 }
+}

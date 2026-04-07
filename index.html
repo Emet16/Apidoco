@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inteligentny konfigurator instalacji</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  </head>
+  <body>
+    <main class="container">
+      <header class="hero">
+        <h1>Konfigurator instalacji grzewczej</h1>
+      </header>
+
+      <section id="startStep" class="card step-card">
+        <h2>Czy masz już wybrany kocioł?</h2>
+        <div class="inline-actions">
+          <button id="hasBoilerYes" type="button">TAK</button>
+          <button id="hasBoilerNo" type="button">NIE</button>
+        </div>
+      </section>
+
+      <form id="quoteForm" class="card hidden">
+        <section id="stepBoiler" class="hidden step-card">
+          <h2>Krok 1: Wybierz kocioł</h2>
+          <label>Typ kotła
+            <select id="boilerType"><option value="">Wybierz...</option><option value="jednofunkcyjny">Jednofunkcyjny</option><option value="dwufunkcyjny">Dwufunkcyjny</option></select>
+          </label>
+          <label>Model kotła
+            <select id="boilerModel"></select>
+          </label>
+          <div id="boilerPreview" class="preview"></div>
+          <div class="inline-actions">
+            <button type="button" class="back-btn" data-target="startStep">Wstecz</button>
+            <button type="button" id="nextFromBoilerBtn">Dalej</button>
+          </div>
+        </section>
+
+        <section id="stepSuggestion" class="hidden step-card">
+          <h2>Proponowany kocioł</h2>
+          <div id="suggestedBoiler" class="preview"></div>
+          <div class="inline-actions">
+            <button type="button" class="back-btn" data-target="stepInstallType">Wstecz</button>
+            <button id="acceptSuggestionBtn" type="button">Wybierz proponowany kocioł</button>
+          </div>
+        </section>
+
+        <section id="stepCircuits" class="hidden step-card">
+          <h2>Krok 2: Ile obiegów?</h2>
+          <select id="heatingCircuits"></select>
+          <div class="inline-actions">
+            <button type="button" class="back-btn" data-target="stepBoiler">Wstecz</button>
+            <button type="button" id="nextFromCircuitsBtn">Dalej</button>
+          </div>
+        </section>
+
+        <section id="stepInstallType" class="hidden step-card">
+          <h2>Krok 3: Typ instalacji</h2>
+          <select id="installationType">
+            <option value="">Wybierz...</option>
+            <option value="floor">Tylko podłogówka</option>
+            <option value="radiator">Tylko grzejniki</option>
+            <option value="mixed">Mieszana</option>
+          </select>
+          <div class="inline-actions">
+            <button type="button" class="back-btn" data-target="stepCircuits">Wstecz</button>
+            <button type="button" id="nextFromInstallBtn">Dalej</button>
+          </div>
+        </section>
+
+        <section id="stepDynamicQuestion" class="hidden step-card">
+          <h2 id="dynamicQuestionTitle">Pytanie</h2>
+          <p id="dynamicQuestionDescription" class="muted"></p>
+          <div class="inline-actions">
+            <button type="button" class="back-btn" data-target="stepInstallType">Wstecz</button>
+            <button id="answerYes" type="button">TAK</button>
+            <button id="answerNo" type="button">NIE</button>
+          </div>
+        </section>
+
+        <section id="stepAutomation" class="hidden step-card">
+          <h2>Czy chcesz automatykę?</h2>
+          <div id="automationOptions"></div>
+          <button type="button" class="back-btn" data-target="stepDynamicQuestion">Wstecz</button>
+        </section>
+
+        <section id="stepTank" class="hidden step-card">
+          <h2>Wybór zasobnika CWU</h2>
+          <select id="tankSelect"></select>
+          <div id="tankPreview" class="preview"></div>
+          <button type="button" class="back-btn" data-target="stepAutomation">Wstecz</button>
+        </section>
+
+        <section id="stepChimney" class="hidden step-card">
+          <h2>Długość komina</h2>
+          <input id="chimneyLength" type="number" min="1" />
+          <small id="chimneyHint"></small>
+          <button type="button" class="back-btn" data-target="stepTank">Wstecz</button>
+        </section>
+
+        <section id="stepContact" class="hidden step-card">
+          <h2>Dane kontaktowe</h2>
+          <select id="customerType"><option value="">Typ klienta...</option><option value="osoba_fizyczna">Osoba fizyczna</option><option value="firma">Firma</option></select>
+          <input id="email" type="email" placeholder="E-mail" />
+          <textarea id="clientMessage" rows="3" placeholder="Uwagi"></textarea>
+          <button type="button" class="back-btn" data-target="stepChimney">Wstecz</button>
+          <button type="submit">Oblicz wycenę</button>
+        </section>
+
+        <p id="formError" class="form-error hidden"></p>
+      </form>
+
+      <section id="result" class="result hidden">
+        <div class="summary-left" id="resultContent"></div>
+        <div class="summary-right" id="resultImages"></div>
+      </section>
+
+      <section id="sendSection" class="send-section hidden">
+        <button id="sendInquiryBtn" type="button">Wyślij wycenę</button>
+        <p id="sendStatus" class="send-status"></p>
+      </section>
+
+      <button id="adminToggleBtn" class="admin-link" type="button">Admin</button>
+      <dialog id="adminDialog">
+        <h3>Panel administratora</h3>
+        <section id="adminAuthSection">
+          <input id="adminLogin" type="text" placeholder="Login" />
+          <input id="adminPassword" type="password" placeholder="Hasło" />
+          <button id="adminLoginBtn" type="button">Zaloguj</button>
+          <p id="adminAuthStatus" class="send-status"></p>
+        </section>
+        <section id="adminContentSection" class="hidden">
+          <p class="muted">Pełna edycja: kotły (z max obiegów), zasobniki, etapy z pytaniami, automatyka, ceny komina i obiegów.</p>
+          <h4>Kotły</h4><div id="adminBoilers"></div><button id="addBoilerBtn" type="button">+ Kocioł</button>
+          <h4>Zasobniki</h4><div id="adminTanks"></div><button id="addTankBtn" type="button">+ Zasobnik</button>
+          <h4>Etapy</h4><div id="adminStages"></div><button id="addStageBtn" type="button">+ Etap</button>
+          <h4>Automatyka</h4><div id="adminAutomation"></div><button id="addAutomationBtn" type="button">+ Automatyka</button>
+          <h4>Komin/Obiegi</h4>
+          <input id="adminChimneyPrice" type="number" placeholder="Cena komina/m" />
+          <input id="adminChimneyMin" type="number" placeholder="Min komin" />
+          <input id="adminCircuit2" type="number" placeholder="Obieg 2" />
+          <input id="adminCircuit3" type="number" placeholder="Obieg 3" />
+          <div class="inline-actions">
+            <button id="savePricesBtn" type="button">Zapisz</button>
+            <button id="closeAdminBtn" type="button">Zamknij</button>
+          </div>
+        </section>
+      </dialog>
+    </main>
+    <script src="app.js"></script>
+  </body>
+</html>

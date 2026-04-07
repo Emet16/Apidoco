@@ -1,0 +1,54 @@
+/* ========================= VARIABLES ========================= */
+:root {
+  --bg: #f3f8ff;
+  --card: #ffffff;
+  --primary: #0b67d0;
+  --primary-2: #00a6fb;
+  --accent: #ff7a18;
+  --text: #1b2430;
+  --muted: #5b6b80;
+}
+
+/* ========================= LAYOUT ========================= */
+* { box-sizing: border-box; }
+body { margin: 0; font-family: "Segoe UI", Arial, sans-serif; color: var(--text); background: radial-gradient(circle at top right, #d8ecff, var(--bg)); }
+.container { max-width: 1100px; margin: 24px auto; padding: 18px; }
+.hero { background: linear-gradient(135deg, var(--primary), var(--primary-2)); color: #fff; padding: 16px; border-radius: 14px; }
+
+/* ========================= FORM ========================= */
+.card, .result, dialog, .send-section { background: var(--card); border-radius: 14px; box-shadow: 0 8px 22px rgba(0,0,0,.08); }
+.card { margin-top: 14px; padding: 16px; }
+label { display: block; margin: 10px 0; font-weight: 600; }
+input, select, textarea, button { width: 100%; margin-top: 6px; padding: 10px; border-radius: 10px; border: 1px solid #c9d9ef; }
+.hidden { display: none; }
+.step-card { margin-bottom: 12px; border: 1px solid #e7eefb; padding: 12px; border-radius: 10px; }
+
+/* ========================= STEPS ========================= */
+.inline-actions { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+.preview { margin-top: 10px; }
+.boiler-image { width: 100%; max-width: 420px; border-radius: 12px; border: 1px solid #dbe7f8; margin-bottom: 8px; }
+.muted { color: var(--muted); font-size: .9rem; }
+.form-error, .send-status.error { color: #c62828; }
+.send-status.success { color: #148a3d; }
+
+/* ========================= SUMMARY ========================= */
+.result { margin-top: 14px; padding: 14px; display: grid; grid-template-columns: 1.3fr .8fr; gap: 16px; }
+.summary-left p { margin: 6px 0; }
+.summary-right { display: grid; gap: 10px; align-content: start; }
+.summary-image { width: 100%; max-width: 320px; height: 190px; object-fit: cover; border-radius: 12px; border: 1px solid #dbe7f8; }
+
+/* ========================= ADMIN ========================= */
+.admin-link {
+  position: fixed; top: 10px; right: 10px; z-index: 20;
+  width: auto; font-size: 12px; padding: 6px 10px;
+  background: #f3f4f6; color: #6b7280; border: 1px solid #d1d5db;
+  opacity: .6;
+}
+.admin-link:hover { opacity: 1; }
+dialog { width: min(1100px, 94vw); border: 0; padding: 16px; }
+.admin-row { display: grid; gap: 8px; margin-bottom: 8px; grid-template-columns: repeat(6, 1fr) 56px; }
+#adminStages .admin-row, #adminAutomation .admin-row, #adminTanks .admin-row { grid-template-columns: repeat(4, 1fr) 56px; }
+.remove-btn { background: linear-gradient(90deg, #ff4d4f, var(--accent)); color: #fff; border: 0; }
+
+/* ========================= BUTTONS ========================= */
+button { border: 0; color: #fff; font-weight: 700; cursor: pointer; background: linear-gradient(90deg, var(--primary), var(--primary-2)); }
